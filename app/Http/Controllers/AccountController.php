@@ -126,6 +126,7 @@ class AccountController extends Controller
              User::where('id', $id)->update(['image'=>$imageName]);
              return response()->json([
                 'status'=>true,
+                'image' => $imageName,
                 'errors'=> []
             ]);
         }else{

@@ -3,7 +3,7 @@
         <div class="s-body text-center mt-3">
            
             @if(Auth::user()->image != '')
-            <img src="{{asset('profile_pic/'.Auth::user()->image)}}" alt="avatar"  class="rounded-circle img-fluid" style="width: 75px;">
+            <img id="profileImage" src="{{asset('profile_pic/'.Auth::user()->image)}}" alt="avatar"   class="rounded-circle img-fluid" style="width: 75px;">
             @else
             <img src="{{asset('assets/images/avatar.png')}}" alt="avatar"  class="rounded-circle img-fluid" style="width: 150px;">
             @endif
@@ -81,10 +81,13 @@
               if(response.status == false){
                 var errors = response.errors;
                 if(errors.image){
-                   $("#image-error").html(errors.image)
+                   $("#image-error").html(errors.image);
                 }else{
                     window.location.href ='{{url()->current()}}'
                 }
+              }else{
+                $("#profileImage").attr("src", "{{ asset('profile_pic/') }}" + '/' + response.image);
+                 $("#editPicModal").modal("hide"); 
               }
               
             }
