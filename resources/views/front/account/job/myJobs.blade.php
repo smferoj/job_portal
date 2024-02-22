@@ -67,7 +67,7 @@
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a class="dropdown-item" href="job-detail.html"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
                                                     <li><a class="dropdown-item" href="{{route('account.editJob', $job->id)}}"><i class="fa fa-edit" aria-hidden="true"></i> Edit</a></li>
-                                                    <li><a class="dropdown-item" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="deleteJob({{$job->id}})"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
                                                 </ul>
                                             </div>
                                         </td>
@@ -84,128 +84,29 @@
                 {{$jobs->links()}}
             </div>
 
-
         </div>
         </div>
     </div>
 
 	<script>
-       $("").submit(function(e){
-               e.preventDefault();
-               $.ajax({
-                url: '{{route("account.saveJob")}}',
-                type: 'POST',
-                dataType: 'json',
-                data: $("#createJobForm").serializeArray(),
-                success: function(response){
-                    console.log(response);
-                     if(response.status == true){
-                        $("#title").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
+     function deleteJob(id) {
+    if (confirm('Are you sure to delete')) {
+        $.ajax({
+            url: '{{ route("account.deleteJob") }}',
+            type: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                window.location.href = "{{ route('account.myJobs') }}";
+            }
+        });
+    }
+}
 
-                        $("#category").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
 
-                        $("#jobType").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-
-                        $("#vacancy").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-
-                        $("#description").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-
-                     $("#company_name").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-                        window.location.href ="{{route('account.myJobs')}}"
-
-                     }else{
-                        var errors = response.errors;
-                        if(errors.title){
-                        $("#title").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.title)
-                    }else{
-						$("#title").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-
-                    if(errors.category){
-                        $("#category").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.category)
-                    }else{
-						$("#category").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-                    if(errors.jobType){
-                        $("#jobType").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.jobType)
-                    }else{
-						$("#jobType").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-                    if(errors.vacancy){
-                        $("#vacancy").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.vacancy)
-                    }else{
-						$("#vacancy").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-                    if(errors.description){
-                        $("#description").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.description)
-                    }else{
-						$("#description").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-                    if(errors.company_name){
-                        $("#company_name").addClass('is-invalid')
-                        .siblings('p')
-                        .addClass('invalid-feedback')
-                        .html(errors.company_name)
-                    }else{
-						$("#company_name").removeClass('is-invalid')
-                        .siblings('p')
-                        .removeClass('invalid-feedback')
-                        .html("")
-					}
-
-                     }
-                }
-               });
-               
-       }) 
     </script>
  @endsection
 
