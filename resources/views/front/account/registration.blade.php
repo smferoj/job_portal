@@ -36,7 +36,7 @@
                     </form>                    
                 </div>
                 <div class="mt-4 text-center">
-                    <p>Have an account? <a  href="login.html">Login</a></p>
+                    <p>Have an account? <a  href="{{route('account.login')}}">Login</a></p>
                 </div>
             </div>
         </div>
@@ -71,9 +71,9 @@
                     }else{
 						$("#password").removeClass('is-invalid').siblings('p').removeClass('invalid-feedback').html("")
 					}
-                }else{
+                } 
+                window.location.href = '{{route('account.login')}}';
 
-				}
             }
         });
     });
