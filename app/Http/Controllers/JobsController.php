@@ -50,9 +50,7 @@ class JobsController extends Controller
         $jobs = $jobs->orderBy('created_at', 'ASC');
     }
     
-    
-    $jobs = $jobs->paginate(9);
-
+    $jobs = $jobs->paginate(6);
      return view('front.jobs', [
         'categories' => $categories,
         'jobTypes' => $jobTypes,
@@ -60,4 +58,16 @@ class JobsController extends Controller
         'jobTypeArray'=>$jobTypeArray
      ]);
     }
+  // job details
+    public function detail($id){
+          // echo $id;
+
+          $job = Job::where(['id'=>$id, 'status'=>1])->with(['jobType', 'category'])->first();
+          // dd($job);
+          if($job == null){
+            abort(404);
+          }
+          return view('front.jobDetail', ['job'=> $job]);
+    }
+
 }
