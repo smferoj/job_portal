@@ -74,34 +74,35 @@
                     <div class="row">
                         @if($featuredJobs->isNotEmpty())
                         @foreach ($featuredJobs as $featuredJob)
-                            <div class="col-md-4">
-                                <div class="card border-0 p-3 shadow mb-4">
-                                    <div class="card-body">
-                                        <h3 class="border-0 fs-5 pb-2 mb-0">{{ $featuredJob->title}}</h3>
-                                        <p>{{Str::words($featuredJob->description, 10)}}</p>
-                                        <div class="bg-light p-3 border">
+                        
+                        <div class="col-md-4">
+                            <div class="card border-0 p-3 shadow mb-4">
+                                <div class="card-body">
+                                    <h3 class="border-0 fs-5 pb-2 mb-0">{{ $featuredJob->title}}</h3>
+                                    <p>{{Str::words($featuredJob->description, 10)}}</p>
+                                    <div class="bg-light p-3 border">
+                                        <p class="mb-0">
+                                            <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
+                                            <span class="ps-1">{{$featuredJob->location}}</span>
+                                        </p>
+                                        <p class="mb-0">
+                                            <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
+                                            <span class="ps-1">{{$featuredJob->jobType->name}}</span>
+                                        </p>
+                                        @if(!is_null($featuredJob->salary))
                                             <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>
-                                                <span class="ps-1">{{$featuredJob->location}}</span>
+                                                <span class="fw-bolder"><i class="fa fa-usd"></i></span>
+                                                <span class="ps-1">{{$featuredJob->salary}}</span>
                                             </p>
-                                            <p class="mb-0">
-                                                <span class="fw-bolder"><i class="fa fa-clock-o"></i></span>
-                                                <span class="ps-1">{{$featuredJob->jobType->name}}</span>
-                                            </p>
-                                            @if(!is_null($featuredJob->salary))
-                                                <p class="mb-0">
-                                                    <span class="fw-bolder"><i class="fa fa-usd"></i></span>
-                                                    <span class="ps-1">{{$featuredJob->salary}}</span>
-                                                </p>
-                                            @endif
-                                        </div>
-                    
-                                        <div class="d-grid mt-3">
-                                            <a href="{{route('jobDetail',$featuredJob->id)}}" class="btn btn-primary btn-lg">Details</a>
-                                        </div>
+                                        @endif
+                                    </div>
+                
+                                    <div class="d-grid mt-3">
+                                        <a href="{{route('jobDetail',$featuredJob->id)}}" class="btn btn-primary btn-lg">Details</a>
                                     </div>
                                 </div>
                             </div>
+                        </div>
                         @endforeach
                     @endif      
 
@@ -125,7 +126,7 @@
                                 <div class="card border-0 p-3 shadow mb-4">
                                     <div class="card-body">
                                         <h3 class="border-0 fs-5 pb-2 mb-0">{{$latestJob->title}}</h3>
-                                        <p>{{Str::words($featuredJob->description, 10)}}</p>
+                                        <p>{{Str::words($latestJob->description, 10)}}</p>
                                         <div class="bg-light p-3 border">
                                             <p class="mb-0">
                                                 <span class="fw-bolder"><i class="fa fa-map-marker"></i></span>

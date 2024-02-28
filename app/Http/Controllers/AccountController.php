@@ -21,13 +21,14 @@ class AccountController extends Controller
     // save user 
     public function processRegistration(Request $request)
     {
+   
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'email' => 'required|email|unique:users, email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8|same:c_password',
             'c_password' => 'required',
         ]);
-
+    
         if ($validator->passes()) {
             $user = new User();
             $user->name = $request->name;
@@ -46,6 +47,7 @@ class AccountController extends Controller
             ]);
         }
     }
+    
     public function login()
     {
         return view('front.account.login');
@@ -140,7 +142,72 @@ class AccountController extends Controller
         }
     }
 
+      // create category 
 
+      public function category(){
+       $categories =  Category::all();
+        return view('front.account.category.category', compact('categories'));
+      }
+
+      public function createCategory (){
+        return view('front.account.category.create');
+      }
+
+      public function saveCategory(Request $request){
+           $validator = Validator::make($request->all(), [
+            'category'=> 'required'
+           ]);
+           if($validator ->passes()){
+            $category = new Category();
+            $category->name = $request->category;
+            $category->save();
+            session()->flash('success', 'Category added successfully');
+            return response()->json([
+                'status' => true, 
+                'errors' => [] ]);
+
+        }else{
+            return response()->json([
+                'status'=>false,
+                "errors"=>$validator->errors()
+            ]);
+        }
+      }
+
+      // job type 
+
+      public function jobType(){
+        $jobTypes =  JobType::all();
+         return view('front.account.jobType.jobType', compact('jobTypes'));
+       }
+ 
+      public function createjobType (){
+        return view('front.account.jobType.create');
+      }
+
+      public function savejobType(Request $request){
+           $validator = Validator::make($request->all(), [
+            'name'=> 'required'
+           ]);
+           if($validator ->passes()){
+            $jobType = new jobType();
+            $jobType->name = $request->name;
+            $jobType->save();
+            session()->flash('success', 'JobType added successfully');
+            return response()->json([
+                'status' => true, 
+                'errors' => [] ]);
+
+        }else{
+            return response()->json([
+                'status'=>false,
+                "errors"=>$validator->errors()
+            ]);
+        }
+      }
+
+
+    //    Job
     public function createJob(){
         $categories = Category::orderBy('name', 'ASC')->where('status', 1)->get();
         $jobTypes = JobType::orderBy('name', 'ASC')->where('status', 1)->get();

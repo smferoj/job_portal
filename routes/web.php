@@ -39,6 +39,17 @@ Route::group(['account'], function(){
         Route::put('/account/update-profile', [AccountController::class, 'updateProfile'])->name('account.updateProfile');
         Route::get('/account/logout', [AccountController::class, 'logOut'])->name('account.logout');
         Route::post('/update-profile-pic', [AccountController::class, 'updateProfilePic'])->name('account.updateProfilePic');
+
+        Route::get('/category', [AccountController::class, 'category'])->name('account.category');
+        Route::get('/create-category', [AccountController::class, 'createCategory'])->name('account.createCategory');
+        Route::post('/save-category', [AccountController::class, 'saveCategory'])->name('account.saveCategory');
+
+        Route::get('/jobType', [AccountController::class, 'jobType'])->name('account.jobType');
+        Route::get('/create-jobType', [AccountController::class, 'createjobType'])->name('account.createjobType');
+        Route::post('/save-jobType', [AccountController::class, 'savejobType'])->name('account.savejobType');
+        
+
+
         Route::get('/create-job', [AccountController::class, 'createJob'])->name('account.createJob');
         Route::post('/save-job', [AccountController::class, 'saveJob'])->name('account.saveJob');
         Route::get('/my-jobs', [AccountController::class, 'myJobs'])->name('account.myJobs');
