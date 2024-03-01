@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Job;
+use App\Models\JobApplication;
 use App\Models\JobType;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -365,4 +366,35 @@ class AccountController extends Controller
       ]);
     }
 
+    public function myjobApplication(){
+       $jobApplications =  JobApplication::where('user_id', Auth::user()->id)
+       ->with('job', 'job.jobType', 'job.applications')
+       ->paginate(10);
+        return view('front.account.job.my-job-application', [
+            'jobApplications'=> $jobApplications
+        ]);
+    }
+    public function removeJob(Request $request)
+    {
+        $jobApplication = JobApplication::where([
+            'user_id' => Auth::user()->id,
+            'id' => $request->id
+        ])->first();
+    
+        if ($jobApplication == null) {
+            session()->flash('error', 'Either job deleted or not found');
+            return response()->json([
+                'status' => true
+            ]);
+        } else {
+            // Delete the job application
+            $jobApplication->delete();
+    
+            session()->flash('success', 'Job application removed successfully');
+            return response()->json([
+                'status' => true
+            ]);
+        }
+    }
+    
 }
