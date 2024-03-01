@@ -1,7 +1,8 @@
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-white shadow py-3">
 		<div class="container">
-			<a class="navbar-brand" href="index.html">CareerVibe</a>
+			<a class="navbar-brand" href="index.html">Job<span class="text-success">Portal</span>
+				</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -11,7 +12,7 @@
 						<a class="nav-link" aria-current="page" href="{{route('home')}}">Home</a>
 					</li>	
 					<li class="nav-item">
-						<a class="nav-link" aria-current="page" href="jobs.html">Find Jobs</a>
+						<a class="nav-link" aria-current="page" href="{{route('jobs')}}">Find Jobs</a>
 					</li>										
 				</ul>
 				@if(Auth::check())
