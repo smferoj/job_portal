@@ -101,23 +101,24 @@
                         </div>
                     </div>
                     <div class="descript_wrap white-bg">
-                        <table>
+                        <table class=" table table-stipe">
                             <tr>
                                  <th> Name</th>
                                  <th> Email</th>
-                                 <th> Applied Date</th>
+                                 <th> Apply Date</th>
                             </tr>
                             @if($applications->isNotEmpty())
                             @foreach($applications as $application)
 
                             <tr>
-                                <td>{{$application->user->name}}</td>
+                                <td >{{$application->user->name}}</td>
                                 <td>{{$application->user->email}}</td>
                                 <td>{{$application->user->created_at}}</td>
                                
                             </tr>
-
+                            @endforeach
                             @endif
+                           
                         </table>
                        
                     </div>
