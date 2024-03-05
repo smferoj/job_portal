@@ -49,7 +49,12 @@ Route::group(['account'], function(){
         Route::get('/jobType', [AccountController::class, 'jobType'])->name('account.jobType');
         Route::get('/create-jobType', [AccountController::class, 'createjobType'])->name('account.createjobType');
         Route::post('/save-jobType', [AccountController::class, 'savejobType'])->name('account.savejobType');
+        Route::get('/saved-jobs', [AccountController::class, 'savedJobs'])->name('account.savedJobs');
+        Route::get('/remove-saved-jobs', [AccountController::class, 'removeSavedJob'])->name('account.removeSavedJob');
         
+
+
+
 
 
         Route::get('/create-job', [AccountController::class, 'createJob'])->name('account.createJob');
