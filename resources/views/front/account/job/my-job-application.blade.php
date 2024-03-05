@@ -66,7 +66,7 @@ job application
                                                 
                                                 <ul class="dropdown-menu dropdown-menu-end">
                                                     <li><a class="dropdown-item" href="{{route("jobDetail", $jobApplication->job_id)}}"> <i class="fa fa-eye" aria-hidden="true"></i> View</a></li>
-                                                    <li><a class="dropdown-item" href="#" onclick="removeJob({{$jobApplication->id}})"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
+                                                    <li><a class="dropdown-item" href="#" onclick="removeJob('{{$jobApplication->id}}')"><i class="fa fa-trash" aria-hidden="true"></i> Remove</a></li>
                                                 </ul>
                                             </div>
                                         </td>

@@ -41,7 +41,7 @@
                             </div>
                             <div class="jobs_right">
                                 <div class="apply_now">
-                                    <a class="heart_mark" href="#"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
+                                    <a class="heart_mark" href="javascript:void(0);" onclick = "saveJob('{$job->id}}')"> <i class="fa fa-heart-o" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -65,15 +65,61 @@
                         </div>
                         <div class="border-bottom"></div>
                         <div class="pt-3 text-end">
-                            <a href="#" class="btn btn-secondary">Save</a>
-                            @if(Auth::check())
-                            <a href="#" onclick="applyJob({{$job->id}})" class="btn btn-primary">Apply</a>
+                           @if(Auth::check())
+                            <a href="#" onclick="saveJob('{{ $job->id }}')"   class="btn btn-secondary">Save</a>
+                            @else
+                            <a href="javascript:void();" class="btn btn-secondary disabled">Login to Save</a>
+                            @endif
+
+                             @if(Auth::check())
+                            <a href="#" onclick="applyJob('{{ $job->id }}')" class="btn btn-secondary">Apply</a>
                             @else
                             <a href="javascript:void();" class="btn btn-primary disabled">Login to Apply</a>
-                            @endif
+                            @endif 
 
                            
                         </div>
+                    </div>
+                </div>
+<!-- job applications -->
+
+                <div class="card shadow border-0 mt-4">
+                    <div class="job_details_header">
+                        <div class="single_jobs white-bg d-flex justify-content-between">
+                            <div class="jobs_left d-flex align-items-center">
+                                
+                                <div class="jobs_conetent">
+                                    <a href="#">
+                                        <h4>Aplicants</h4>
+                                    </a>
+                                   
+                                </div>
+                            </div>
+                            <div class="jobs_right">
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="descript_wrap white-bg">
+                        <table>
+                            <tr>
+                                 <th> Name</th>
+                                 <th> Email</th>
+                                 <th> Applied Date</th>
+                            </tr>
+                            @if($applications->isNotEmpty())
+                            @foreach($applications as $application)
+
+                            <tr>
+                                <td>{{$application->user->name}}</td>
+                                <td>{{$application->user->email}}</td>
+                                <td>{{$application->user->created_at}}</td>
+                               
+                            </tr>
+
+                            @endif
+                        </table>
+                       
                     </div>
                 </div>
             </div>
@@ -130,7 +176,24 @@ function applyJob(id){
         })
     }
 }
+function saveJob(id){
+  
+    $.ajax({
+    url: "{{ route('savedJob', ['id' => $job->id]) }}", 
+    type: 'post',
+    data: {
+        _token: '{{ csrf_token() }}', 
+    },
+    dataType: 'json',
+    success: function (response) {
+        window.location.href = "{{ url()->current() }}";
+    }
+});
+
+}
+
 </script>
+
 
  @endsection
 

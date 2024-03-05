@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\JobNotificationEmail;
 use App\Models\Job;
+use App\Models\User;
 use App\Models\JobType;
 use App\Models\Category;
-use App\Models\JobApplication;
-use App\Models\User;
+use App\Models\SavedJob;
 use Illuminate\Http\Request;
+use App\Models\JobApplication;
+use App\Mail\JobNotificationEmail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -72,8 +73,24 @@ class JobsController extends Controller
           if($job == null){
             abort(404);
           }
-          return view('front.jobDetail', ['job'=> $job]);
+
+          $count = 0;
+          if(Auth::user()){
+            $count = SavedJob::where([
+              'user_id'=> Auth::user()->id,
+              'job_id'=>$id
+            ])->count();
+          }
+
+          $applications = JobApplication::where('job_id' , $id)->with('user')->get();
+
+          return view('front.jobDetail', ['job'=> $job, 'count'=>$count, 'applications'=>$applications]);
     }
+
+
+    // fetch applicants
+
+    
 
     public function applyJob(Request $request){
              $id = $request->id;
@@ -132,5 +149,43 @@ class JobsController extends Controller
                 'message'=> 'You have successfully applied'
               ]);
     }
+
+    public function saveJob(Request $request){
+         $id = $request->id;
+         $job = Job::find($id);
+
+         if($job == null){
+          session()->flash('error', 'Job not found');
+          return response()->json([
+            'status'=>false,
+          ]);
+         }
+
+        $count = SavedJob::where([
+         'user_id' => Auth::user()->id,
+         'job_id' => $id
+         ])->count();
+
+         if($count > 0){
+          session()->flash('error', 'Job already saved');
+
+           return response()->json([ 
+            'status'=>false,
+          ]);
+      
+    }
+
+    $savedJob = new SavedJob();
+    $savedJob->job_id = $id;
+    $savedJob->user_id = Auth::user()->id;
+    $savedJob->save();
+
+ session()->flash('success', 'Job is saved');
+
+           return response()->json([
+            'status'=>true,
+          ]);
+}
+
 
 }
