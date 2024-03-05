@@ -27,6 +27,7 @@ return array(
     'App\\Models\\Job' => $baseDir . '/app/Models/Job.php',
     'App\\Models\\JobApplication' => $baseDir . '/app/Models/JobApplication.php',
     'App\\Models\\JobType' => $baseDir . '/app/Models/JobType.php',
+    'App\\Models\\SavedJob' => $baseDir . '/app/Models/SavedJob.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

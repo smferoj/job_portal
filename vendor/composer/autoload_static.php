@@ -561,6 +561,7 @@ class ComposerStaticInit9c491b8531eec05ba41a11d9276a5749
         'App\\Models\\Job' => __DIR__ . '/../..' . '/app/Models/Job.php',
         'App\\Models\\JobApplication' => __DIR__ . '/../..' . '/app/Models/JobApplication.php',
         'App\\Models\\JobType' => __DIR__ . '/../..' . '/app/Models/JobType.php',
+        'App\\Models\\SavedJob' => __DIR__ . '/../..' . '/app/Models/SavedJob.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
